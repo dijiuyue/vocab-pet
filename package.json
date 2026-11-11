@@ -1,0 +1,17 @@
+{
+  "name": "vocab-pet",
+  "productName": "VocabPet",
+  "version": "1.0.0",
+  "description": "桌面宠物背单词",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node test/parser.test.js",
+    "shots": "VOCABPET_SHOTS=1 electron .",
+    "pack:win": "electron-packager . VocabPet --platform=win32 --arch=x64 --out=dist --overwrite --ignore=^/dist --ignore=^/screenshots --ignore=^/test"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.3.0"
+  }
+}

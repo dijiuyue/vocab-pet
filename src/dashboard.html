@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
+<title>VocabPet 后台</title>
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="aurora"><i></i><i></i><i></i></div>
+<header class="titlebar"><span class="logo"></span>VocabPet <small>桌面背单词 · 后台</small></header>
+
+<main>
+  <section class="stats">
+    <div class="stat glass" style="--c1:#a855f7;--c2:#6366f1"><div class="ico">👀</div><div><b data-k="viewed">0</b><span>今日浏览</span></div></div>
+    <div class="stat glass" style="--c1:#ec4899;--c2:#f97316"><div class="ico">💡</div><div><b data-k="revealed">0</b><span>今日查看释义</span></div></div>
+    <div class="stat glass" style="--c1:#f59e0b;--c2:#ef4444"><div class="ico">🔥</div><div><b data-k="streak">0</b><span>连续天数</span></div></div>
+    <div class="stat glass" style="--c1:#22d3ee;--c2:#10b981"><div class="ico">📚</div><div><b data-k="total">0</b><span>累计学过</span></div></div>
+  </section>
+
+  <section class="grid">
+    <div class="glass chart-card">
+      <div class="card-head">
+        <h3>学习趋势</h3>
+        <div class="legend"><i class="l1"></i>浏览 <i class="l2"></i>看释义</div>
+        <div class="seg"><button data-range="14" class="on">14 天</button><button data-range="30">30 天</button></div>
+      </div>
+      <svg id="chart" viewBox="0 0 640 240" preserveAspectRatio="none"></svg>
+      <div id="tip" class="tip"></div>
+    </div>
+
+    <div class="glass side">
+      <h3>当前词单</h3>
+      <div class="ring-box">
+        <svg viewBox="0 0 120 120" class="ring">
+          <defs><linearGradient id="rg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f0abfc"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+          <circle cx="60" cy="60" r="50" class="track"/><circle cx="60" cy="60" r="50" class="bar" id="ringBar"/>
+        </svg>
+        <div class="ring-txt"><b id="pct">0%</b><span id="listCount">0/0</span></div>
+      </div>
+      <div class="list-name" id="listName"></div>
+      <div class="muted" id="position"></div>
+      <div class="muted" id="countdown"></div>
+
+      <h3 class="mt">设置</h3>
+      <label class="field">换词间隔
+        <span class="inp"><input id="interval" type="number" min="1" max="1440"> 分钟</span>
+      </label>
+      <button class="btn primary" id="importBtn">⬆ 导入词单</button>
+      <button class="btn ghost" id="clearBtn">清空学习进度</button>
+      <p class="fmt">支持 .txt / .csv / .tsv（UTF-8）<br>每行：<code>单词,释义[,音标或例句]</code> 或 Tab 分隔</p>
+    </div>
+  </section>
+
+  <section class="glass today">
+    <div class="card-head"><h3>今天背的单词</h3><span class="muted" id="todayCount"></span></div>
+    <div id="todayList" class="words"></div>
+  </section>
+</main>
+<div id="toast" class="toast"></div>
+<script src="dashboard.js"></script>
+</body>
+</html>

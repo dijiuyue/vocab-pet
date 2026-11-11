@@ -1,0 +1,85 @@
+:root { --spring: cubic-bezier(.2, 1.5, .35, 1); --font: "Segoe UI Variable Display", "Segoe UI", "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; font-family: var(--font); user-select: none; }
+body.shots { background: radial-gradient(circle at 30% 20%, #3b4a7a, #141a33 70%); } /* 仅截图模式：模拟桌面背景 */
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+/* ———————— 宠物 ———————— */
+.pet { position: absolute; left: 70px; bottom: 6px; width: 120px; height: 132px; cursor: grab; z-index: 2; }
+.body-svg { display: block; overflow: visible; animation: float 3.4s ease-in-out infinite; filter: drop-shadow(0 6px 14px rgba(139, 92, 246, .45)); }
+.blob { transform-origin: 60px 108px; animation: breathe 2.8s ease-in-out infinite; }
+.sprout { transform-origin: 60px 30px; animation: sway 3.2s ease-in-out infinite; }
+.tip { transform-origin: 63px 9px; animation: glow 2.4s ease-in-out infinite; }
+.eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; transition: transform .3s var(--spring); }
+.eye.r { animation-delay: .04s; }
+.happy-eyes { opacity: 0; transition: opacity .2s; }
+.cheek { opacity: .35; transition: opacity .3s; }
+.mouth { transition: d .3s; }
+.shadow { position: absolute; left: 30px; bottom: 0; width: 60px; height: 10px; border-radius: 50%; background: rgba(30, 10, 60, .35); filter: blur(3px); animation: shadow 3.4s ease-in-out infinite; }
+
+.pet.hover .eye { transform: translateY(-3px) scale(1.12); }
+.pet.hover .cheek { opacity: .75; }
+.pet.hover .mouth { d: path("M53 83 Q60 93 67 83"); }
+.pet.hover .tip { animation-duration: .9s; }
+.pet.hover .body-svg { filter: drop-shadow(0 6px 22px rgba(216, 180, 254, .9)); }
+.pet.happy .eyes { opacity: 0; } .pet.happy .happy-eyes { opacity: 1; } .pet.happy .cheek { opacity: 1; }
+.pet.bounce .blob { animation: squash .7s var(--spring); }
+.pet.dragging { cursor: grabbing; }
+
+/* 新单词提醒：光圈涟漪 + NEW 徽章 */
+.ring { position: absolute; left: 10px; top: 22px; width: 100px; height: 100px; border-radius: 50%; border: 2px solid #f0abfc; opacity: 0; pointer-events: none; }
+.pet.alert .ring { animation: ripple 2s ease-out infinite; }
+.pet.alert .tip { animation: glow .6s ease-in-out infinite; }
+.badge { position: absolute; right: 2px; top: 6px; padding: 2px 7px; border-radius: 10px; font: 700 10px/1.4 var(--font); letter-spacing: 1px; color: #fff;
+  background: linear-gradient(135deg, #f472b6, #8b5cf6); box-shadow: 0 0 12px #f472b6; transform: scale(0) rotate(-20deg); transition: transform .5s var(--spring); }
+.pet.alert .badge { transform: scale(1) rotate(8deg); animation: wiggle 1.6s ease-in-out infinite .5s; }
+
+/* ———————— 单词气泡 ———————— */
+.bubble { position: absolute; left: 6px; top: 6px; width: 248px; height: 150px; display: flex; align-items: center; justify-content: center; gap: 4px; z-index: 3;
+  opacity: 0; pointer-events: none; transform-origin: 50% 100%; transform: translateY(26px) scale(.55); filter: blur(12px);
+  transition: opacity .35s ease, transform .55s var(--spring), filter .4s ease; }
+.bubble.show { opacity: 1; pointer-events: auto; transform: none; filter: blur(0); }
+.tail { position: absolute; bottom: 5px; z-index: -1; left: 50%; width: 14px; height: 14px; margin-left: -7px; transform: rotate(45deg); background: #17122f; border-right: 1px solid rgba(240, 171, 252, .5); border-bottom: 1px solid rgba(240, 171, 252, .5); }
+
+.card-wrap { width: 192px; height: 128px; perspective: 900px; cursor: pointer; }
+.card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.3, 1.4, .4, 1); }
+.card.flipped { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; border-radius: 18px; padding: 12px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  isolation: isolate; backface-visibility: hidden; background: linear-gradient(160deg, rgba(40, 32, 80, .94), rgba(18, 14, 38, .94)); box-shadow: 0 10px 30px rgba(20, 0, 50, .5), inset 0 1px 0 rgba(255, 255, 255, .12); overflow: hidden; }
+.back { transform: rotateY(180deg); background: linear-gradient(160deg, rgba(76, 29, 149, .95), rgba(30, 14, 60, .95)); }
+/* 流光边框 */
+.face::before { content: ""; position: absolute; inset: -60%; background: conic-gradient(from 0deg, transparent 0 60%, #f0abfc, #818cf8, #22d3ee, transparent 90%); animation: spin 3.5s linear infinite; z-index: -2; }
+.face::after { content: ""; position: absolute; inset: 1.5px; border-radius: 16.5px; background: inherit; z-index: -1; }
+.front::after { background: linear-gradient(160deg, #262050, #120e26); }
+.back::after { background: linear-gradient(160deg, #3b1a73, #1a0d36); }
+
+.word { font-size: 28px; font-weight: 700; letter-spacing: .5px; line-height: 1.15; word-break: break-word;
+  background: linear-gradient(100deg, #fff 20%, #f0abfc 40%, #a5f3fc 55%, #fff 75%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 3s linear infinite; filter: drop-shadow(0 0 10px rgba(240, 171, 252, .45)); }
+.word span { display: inline-block; opacity: 0; transform: translateY(14px) scale(.6); filter: blur(6px); animation: letterIn .55s var(--spring) forwards; }
+.phon { margin-top: 4px; font-size: 12px; color: #c4b5fd; opacity: .9; }
+.hint { margin-top: 8px; font-size: 10px; color: rgba(221, 214, 254, .55); letter-spacing: .5px; }
+.meaning { font-size: 16px; font-weight: 600; color: #fdf4ff; line-height: 1.45; text-shadow: 0 0 12px rgba(240, 171, 252, .6); }
+.example { margin-top: 6px; font-size: 11px; color: #ddd6fe; opacity: .8; font-style: italic; line-height: 1.35; max-height: 44px; overflow: hidden; }
+.card.flipped .meaning, .card.flipped .example { animation: rise .6s .25s both var(--spring); }
+
+.nav { width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(240, 171, 252, .45); background: rgba(30, 24, 60, .85); color: #f5d0fe; font-size: 17px; line-height: 20px;
+  cursor: pointer; box-shadow: 0 0 10px rgba(167, 139, 250, .4); opacity: 0; transform: scale(.3); transition: transform .4s var(--spring), opacity .3s, box-shadow .2s, background .2s; }
+.bubble.show .nav { opacity: 1; transform: scale(1); transition-delay: .15s; }
+.nav:hover { background: linear-gradient(135deg, #a855f7, #ec4899); box-shadow: 0 0 18px #f0abfc; transform: scale(1.18) !important; }
+.nav:active { transform: scale(.9) !important; }
+
+/* ———————— 关键帧 ———————— */
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes shadow { 0%, 100% { transform: scaleX(1); opacity: .9; } 50% { transform: scaleX(.75); opacity: .5; } }
+@keyframes breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.035, .97); } }
+@keyframes sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(8deg); } }
+@keyframes glow { 0%, 100% { transform: scale(.8); opacity: .7; } 50% { transform: scale(1.35); opacity: 1; } }
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes squash { 0% { transform: scale(1, 1); } 20% { transform: scale(1.25, .75); } 45% { transform: scale(.85, 1.2) translateY(-14px); } 70% { transform: scale(1.08, .92); } 100% { transform: scale(1, 1); } }
+@keyframes ripple { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
+@keyframes wiggle { 0%, 100% { transform: scale(1) rotate(8deg); } 50% { transform: scale(1.12) rotate(-6deg); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes shimmer { to { background-position: -250% 0; } }
+@keyframes letterIn { to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); filter: blur(4px); } }
