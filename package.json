@@ -8,7 +8,7 @@
     "start": "electron .",
     "test": "node test/parser.test.js",
     "shots": "VOCABPET_SHOTS=1 electron .",
-    "pack:win": "electron-packager . VocabPet --platform=win32 --arch=x64 --out=dist --overwrite --ignore=^/dist --ignore=^/screenshots --ignore=^/test"
+    "pack:win": "electron-packager . VocabPet --platform=win32 --arch=x64 --out=dist --overwrite --ignore=^/dist --ignore=^/screenshots --ignore=^/test --ignore=^/docs"
   },
   "devDependencies": {
     "@electron/packager": "^20.3.0",
