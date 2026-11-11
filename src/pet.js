@@ -28,22 +28,18 @@ function tick() {
   parts = parts.filter((p) => (p.life -= 0.018) > 0);
   for (const p of parts) {
     p.x += p.vx; p.y += p.vy; p.vy += 0.06; p.vx *= 0.98; p.rot += 0.1;
-    ctx.globalAlpha = p.life; ctx.fillStyle = p.c; ctx.shadowColor = p.c; ctx.shadowBlur = 10;
+    ctx.globalAlpha = p.life; ctx.fillStyle = p.c;
     star(p.x, p.y, p.r * p.life, p.rot);
   }
   if (parts.length) requestAnimationFrame(tick); else ctx.clearRect(0, 0, innerWidth, innerHeight);
 }
 
 // —————— 单词渲染 ——————
-function render(w, animate) {
+function render(w) {
   cur = w;
   const word = $('word');
   word.style.fontSize = w.w.length > 12 ? '20px' : w.w.length > 9 ? '24px' : '28px';
-  if (animate) {
-    word.innerHTML = '';
-    [...w.w].forEach((ch, i) => { const s = document.createElement('span'); s.textContent = ch; s.style.animationDelay = `${i * 0.04}s`; word.appendChild(s); });
-    clearTimeout(render.t); render.t = setTimeout(() => { word.textContent = w.w; }, 600 + w.w.length * 40); // 动画结束后还原成纯文本以显示流光渐变
-  } else word.textContent = w.w;
+  word.textContent = w.w;
   $('phon').textContent = w.p || '';
   $('meaning').textContent = w.m;
   $('example').textContent = w.e || '';
@@ -56,9 +52,9 @@ function showBubble() {
   pet.classList.add('hover');
   if (shown) return;
   shown = true;
+  render(cur);
   bubble.classList.add('show');
   pet.classList.remove('alert');
-  render(cur, true);
   burst(130, 120, 22);
   api.mark('viewed', cur.w);
 }
@@ -108,11 +104,11 @@ pet.addEventListener('pointerup', (e) => {
 
 api.onWord((w) => {
   const was = cur; cur = w;
-  if (shown) { render(w, true); burst(130, 80, 16); if (was?.w !== w.w) api.mark('viewed', w.w); }
-  else render(w, false);
+  if (shown) { render(w); burst(130, 80, 16); if (was?.w !== w.w) api.mark('viewed', w.w); }
+  else render(w);
   if (w.isNew && !shown) pet.classList.add('alert');
 });
-api.getWord().then((w) => render(w, false));
+api.getWord().then((w) => render(w));
 
 // 截图自检用
 window.__shots = { hover: showBubble, flip, alert: () => pet.classList.add('alert') };

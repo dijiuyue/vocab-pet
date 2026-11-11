@@ -6,15 +6,17 @@ body.shots { background: radial-gradient(circle at 30% 20%, #3b4a7a, #141a33 70%
 
 /* ———————— 宠物 ———————— */
 .pet { position: absolute; left: 70px; bottom: 6px; width: 120px; height: 132px; cursor: grab; z-index: 2; }
-.body-svg { display: block; overflow: visible; animation: float 3.4s ease-in-out infinite; filter: drop-shadow(0 6px 14px rgba(139, 92, 246, .45)); }
+.body-svg { position: relative; width: 120px; height: 120px; display: block; overflow: visible; animation: float 3.4s ease-in-out infinite; filter: drop-shadow(0 6px 14px rgba(139, 92, 246, .45)); }
+.body-svg .sprout, .body-svg .blob, .body-svg .tip, .body-svg .eyes, .body-svg .eye { position: absolute; inset: 0; width: 120px; height: 120px; overflow: visible; }
+.body-svg svg { position: absolute; inset: 0; overflow: visible; display: block; }
+.body-svg .defs { inset: auto; width: 0; height: 0; overflow: hidden; }
 .blob { transform-origin: 60px 108px; animation: breathe 2.8s ease-in-out infinite; }
 .sprout { transform-origin: 60px 30px; animation: sway 3.2s ease-in-out infinite; }
 .tip { transform-origin: 63px 9px; animation: glow 2.4s ease-in-out infinite; }
-.eye { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; transition: transform .3s var(--spring); }
-.eye.r { animation-delay: .04s; }
+.eye { transform-origin: 46px 70px; animation: blink 5s infinite; transition: transform .3s var(--spring); }
+.eye.r { transform-origin: 74px 70px; animation-delay: .04s; }
 .happy-eyes { opacity: 0; transition: opacity .2s; }
 .cheek { opacity: .35; transition: opacity .3s; }
-.mouth { transition: d .3s; }
 .shadow { position: absolute; left: 30px; bottom: 0; width: 60px; height: 10px; border-radius: 50%; background: rgba(30, 10, 60, .35); filter: blur(3px); animation: shadow 3.4s ease-in-out infinite; }
 
 .pet.hover .eye { transform: translateY(-3px) scale(1.12); }
@@ -36,9 +38,9 @@ body.shots { background: radial-gradient(circle at 30% 20%, #3b4a7a, #141a33 70%
 
 /* ———————— 单词气泡 ———————— */
 .bubble { position: absolute; left: 6px; top: 6px; width: 248px; height: 150px; display: flex; align-items: center; justify-content: center; gap: 4px; z-index: 3;
-  opacity: 0; pointer-events: none; transform-origin: 50% 100%; transform: translateY(26px) scale(.55); filter: blur(12px);
-  transition: opacity .35s ease, transform .55s var(--spring), filter .4s ease; }
-.bubble.show { opacity: 1; pointer-events: auto; transform: none; filter: blur(0); }
+  opacity: 0; pointer-events: none; transform-origin: 50% 100%; transform: translateY(8px) scale(.96);
+  transition: opacity .08s ease-out, transform .08s ease-out; }
+.bubble.show { opacity: 1; pointer-events: auto; transform: none; }
 .tail { position: absolute; bottom: 5px; z-index: -1; left: 50%; width: 14px; height: 14px; margin-left: -7px; transform: rotate(45deg); background: #17122f; border-right: 1px solid rgba(240, 171, 252, .5); border-bottom: 1px solid rgba(240, 171, 252, .5); }
 
 .card-wrap { width: 192px; height: 128px; perspective: 900px; cursor: pointer; }
@@ -54,9 +56,8 @@ body.shots { background: radial-gradient(circle at 30% 20%, #3b4a7a, #141a33 70%
 .back::after { background: linear-gradient(160deg, #3b1a73, #1a0d36); }
 
 .word { font-size: 28px; font-weight: 700; letter-spacing: .5px; line-height: 1.15; word-break: break-word;
-  background: linear-gradient(100deg, #fff 20%, #f0abfc 40%, #a5f3fc 55%, #fff 75%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: shimmer 3s linear infinite; filter: drop-shadow(0 0 10px rgba(240, 171, 252, .45)); }
-.word span { display: inline-block; opacity: 0; transform: translateY(14px) scale(.6); filter: blur(6px); animation: letterIn .55s var(--spring) forwards; }
+  background: linear-gradient(100deg, #fff 20%, #f0abfc 40%, #a5f3fc 55%, #fff 75%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 10px rgba(240, 171, 252, .45)); }
 .phon { margin-top: 4px; font-size: 12px; color: #c4b5fd; opacity: .9; }
 .hint { margin-top: 8px; font-size: 10px; color: rgba(221, 214, 254, .55); letter-spacing: .5px; }
 .meaning { font-size: 16px; font-weight: 600; color: #fdf4ff; line-height: 1.45; text-shadow: 0 0 12px rgba(240, 171, 252, .6); }
@@ -80,6 +81,4 @@ body.shots { background: radial-gradient(circle at 30% 20%, #3b4a7a, #141a33 70%
 @keyframes ripple { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
 @keyframes wiggle { 0%, 100% { transform: scale(1) rotate(8deg); } 50% { transform: scale(1.12) rotate(-6deg); } }
 @keyframes spin { to { transform: rotate(360deg); } }
-@keyframes shimmer { to { background-position: -250% 0; } }
-@keyframes letterIn { to { opacity: 1; transform: none; filter: blur(0); } }
-@keyframes rise { from { opacity: 0; transform: translateY(10px); filter: blur(4px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
