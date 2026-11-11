@@ -30,35 +30,42 @@
 <div id="pet" class="pet hit">
   <div class="badge" id="badge">NEW</div>
   <div class="ring"></div>
-  <svg class="body-svg" viewBox="0 0 120 120" width="120" height="120">
-    <defs>
-      <radialGradient id="g-body" cx="40%" cy="30%" r="75%">
-        <stop offset="0" stop-color="#f3e8ff"/><stop offset=".45" stop-color="#c4b5fd"/><stop offset="1" stop-color="#8b5cf6"/>
-      </radialGradient>
-      <radialGradient id="g-tip"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>
-      <linearGradient id="g-leaf" x1="0" x2="1"><stop offset="0" stop-color="#86efac"/><stop offset="1" stop-color="#22c55e"/></linearGradient>
-    </defs>
-    <g class="sprout">
-      <path d="M60 30 C60 22 61 16 63 10" stroke="#6ee7b7" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M62 16 C70 8 80 10 82 14 C76 20 68 20 62 16Z" fill="url(#g-leaf)"/>
-      <circle class="tip" cx="63" cy="9" r="7" fill="url(#g-tip)"/>
-    </g>
-    <g class="blob">
-      <path d="M60 28 C88 28 104 50 104 76 C104 98 86 108 60 108 C34 108 16 98 16 76 C16 50 32 28 60 28Z" fill="url(#g-body)"/>
-      <ellipse cx="44" cy="46" rx="12" ry="7" fill="#fff" opacity=".55" transform="rotate(-25 44 46)"/>
-      <g class="eyes">
-        <g class="eye l"><ellipse cx="46" cy="70" rx="7" ry="9" fill="#2e1065"/><circle class="shine" cx="48.5" cy="66.5" r="2.6" fill="#fff"/></g>
-        <g class="eye r"><ellipse cx="74" cy="70" rx="7" ry="9" fill="#2e1065"/><circle class="shine" cx="76.5" cy="66.5" r="2.6" fill="#fff"/></g>
-      </g>
-      <g class="happy-eyes">
-        <path d="M39 71 Q46 62 53 71" stroke="#2e1065" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-        <path d="M67 71 Q74 62 81 71" stroke="#2e1065" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      </g>
-      <ellipse class="cheek" cx="36" cy="83" rx="7" ry="4" fill="#fb7185"/>
-      <ellipse class="cheek" cx="84" cy="83" rx="7" ry="4" fill="#fb7185"/>
-      <path class="mouth" d="M55 84 Q60 89 65 84" stroke="#2e1065" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-    </g>
-  </svg>
+  <!-- 摇摆/呼吸/眨眼放在 HTML 层上。同一支 SVG 里的 transform 动画不会进合成器，透明窗口会每帧重绘。 -->
+  <div class="body-svg">
+    <svg class="defs" width="0" height="0" aria-hidden="true">
+      <defs>
+        <radialGradient id="g-body" cx="40%" cy="30%" r="75%">
+          <stop offset="0" stop-color="#f3e8ff"/><stop offset=".45" stop-color="#c4b5fd"/><stop offset="1" stop-color="#8b5cf6"/>
+        </radialGradient>
+        <radialGradient id="g-tip"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>
+        <linearGradient id="g-leaf" x1="0" x2="1"><stop offset="0" stop-color="#86efac"/><stop offset="1" stop-color="#22c55e"/></linearGradient>
+      </defs>
+    </svg>
+    <div class="sprout">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <path d="M60 30 C60 22 61 16 63 10" stroke="#6ee7b7" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M62 16 C70 8 80 10 82 14 C76 20 68 20 62 16Z" fill="url(#g-leaf)"/>
+      </svg>
+      <div class="tip"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="63" cy="9" r="7" fill="url(#g-tip)"/></svg></div>
+    </div>
+    <div class="blob">
+      <svg viewBox="0 0 120 120" width="120" height="120">
+        <path d="M60 28 C88 28 104 50 104 76 C104 98 86 108 60 108 C34 108 16 98 16 76 C16 50 32 28 60 28Z" fill="url(#g-body)"/>
+        <ellipse cx="44" cy="46" rx="12" ry="7" fill="#fff" opacity=".55" transform="rotate(-25 44 46)"/>
+        <g class="happy-eyes">
+          <path d="M39 71 Q46 62 53 71" stroke="#2e1065" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M67 71 Q74 62 81 71" stroke="#2e1065" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </g>
+        <ellipse class="cheek" cx="36" cy="83" rx="7" ry="4" fill="#fb7185"/>
+        <ellipse class="cheek" cx="84" cy="83" rx="7" ry="4" fill="#fb7185"/>
+        <path class="mouth" d="M55 84 Q60 89 65 84" stroke="#2e1065" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="eyes">
+        <div class="eye l"><svg viewBox="0 0 120 120" width="120" height="120"><ellipse cx="46" cy="70" rx="7" ry="9" fill="#2e1065"/><circle cx="48.5" cy="66.5" r="2.6" fill="#fff"/></svg></div>
+        <div class="eye r"><svg viewBox="0 0 120 120" width="120" height="120"><ellipse cx="74" cy="70" rx="7" ry="9" fill="#2e1065"/><circle cx="76.5" cy="66.5" r="2.6" fill="#fff"/></svg></div>
+      </div>
+    </div>
+  </div>
   <div class="shadow"></div>
 </div>
 
