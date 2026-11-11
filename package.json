@@ -1,7 +1,7 @@
 {
   "name": "vocab-pet",
   "productName": "VocabPet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "桌面宠物背单词",
   "main": "src/main.js",
   "scripts": {
